@@ -18,8 +18,8 @@ class ProductController {
    * @param {View} ctx.view
    */
   async index({ request, response, view }) {
-    const all = await Product.query().where('id', 1).fetch();
-    response.json(all);
+    const all = await Product.query().productDetail().fetch();
+    response.json(all.toJSON());
   }
 
   /**

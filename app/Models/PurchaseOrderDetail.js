@@ -11,6 +11,9 @@ class PurchaseOrderDetail extends Model {
     productDetail() {
         return this.belongsTo('App/Models/Product')
     }
+    purchaseOrder() {
+        return this.belongsTo('App/Models/PurchaseOrder')
+    }
 }
 
 module.exports = PurchaseOrderDetail

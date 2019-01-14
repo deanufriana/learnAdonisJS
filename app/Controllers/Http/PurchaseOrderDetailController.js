@@ -18,7 +18,7 @@ class PurchaseOrderDetailController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
-    const All = await PODC.query().belongsProduct().with('productDetail').fetch()
+    const All = await PODC.query().with('productDetail').with('purchaseOrder.supplier').fetch()
     response.json(All.toJSON())
   }
 

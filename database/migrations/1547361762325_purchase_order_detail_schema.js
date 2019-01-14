@@ -7,7 +7,7 @@ class PurchaseOrderDetailSchema extends Schema {
   up () {
     this.create('purchase_order_details', (table) => {
       table.increments().primary().unique()
-      table.integer('purchaseOrder_id').notNull().unsigned().references('id').inTable('purchase_orders')
+      table.integer('purchase_order_id').notNull().unsigned().references('id').inTable('purchase_orders')
       table.integer('product_id').notNull().unsigned().references('id').inTable('products')
       table.integer('qty')
       table.float('total')

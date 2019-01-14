@@ -22,3 +22,5 @@ Route.get('/', () => {
 
 Route.get('/Contoh', 'PurchaseOrderDetailController.index')
 Route.get('/Product', 'ProductController.index')
+Route.get('purchaseOrder', 'PurchaseOrderController.index')
+Route.post('purchaseOrder', 'PurchaseOrderController.create')
