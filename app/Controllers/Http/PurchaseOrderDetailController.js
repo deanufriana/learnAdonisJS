@@ -88,7 +88,8 @@ class PurchaseOrderDetailController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    await PODC.query().where('id', params.id).delete()
   }
 }
 

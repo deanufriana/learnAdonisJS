@@ -37,16 +37,7 @@ class PurchaseOrderController {
    */
   async create({ request, response, view }) {
     const dataPO = request.only(["supplier_id", "total", "total_item"]);
-    const dataPOD = request.collect([
-      "product_id",
-      "total",
-      "qty",
-      "purchase_order_id"
-    ]);
-
     const data = await PO.create(dataPO);
-    await POD.create(dataPOD);
-
     response.json(data.id);
   }
 
@@ -69,7 +60,11 @@ class PurchaseOrderController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+    const show = await PO.query().where('id', params.id).with('supplier').with('purchaseOrderDetails').fetch()
+
+    response.json(show)
+  }
 
   /**
    * Render a form to update an existing purchaseorder.
@@ -90,7 +85,23 @@ class PurchaseOrderController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    // Get Data For Purchase Order
+    const POdata = request.only(["total_item", "total"]);
+
+    // Get Data For Purchase Order Detail
+    const PODdata = request.only(["total", "qty", "product_id"]);
+
+    // Input many data to purchase Order Details
+    await POD.query().insert({ ...PODdata, purchase_order_id: params.id });
+
+    // Update Purchase Order Details
+    await PO.query()
+      .where("id", params.id)
+      .update(POdata);
+
+    response.json(POdata);
+  }
 
   /**
    * Delete a purchaseorder with id.

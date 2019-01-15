@@ -22,5 +22,12 @@ Route.get('/', () => {
 
 Route.get('/Contoh', 'PurchaseOrderDetailController.index')
 Route.get('/Product', 'ProductController.index')
-Route.get('purchaseOrder', 'PurchaseOrderController.index')
+Route.get('purchaseOrders', 'PurchaseOrderController.index')
+
 Route.post('purchaseOrder', 'PurchaseOrderController.create')
+
+Route.patch('purchaseOrder/:id', 'PurchaseOrderController.update')
+
+Route.get('purchaseOrder/:id', 'PurchaseOrderController.show')
+
+Route.delete('purchaseOrderDetail/:id', 'PurchaseOrderDetailController.destroy')
