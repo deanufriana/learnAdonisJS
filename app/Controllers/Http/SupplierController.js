@@ -1,5 +1,5 @@
 'use strict'
-
+const SP = use('App/Models/Supplier');
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -18,6 +18,8 @@ class SupplierController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+	const all = await SP.all()
+	response.json(all)
   }
 
   /**
@@ -53,6 +55,8 @@ class SupplierController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+	const show = await SP.find(params.id)
+	response.json(show)
   }
 
   /**

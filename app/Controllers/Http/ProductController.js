@@ -52,7 +52,10 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+	const product = await Product.find(params.id)
+	response.json(product)
+	}
 
   /**
    * Render a form to update an existing product.

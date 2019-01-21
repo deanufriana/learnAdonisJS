@@ -20,14 +20,12 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.get('/Contoh', 'PurchaseOrderDetailController.index')
-Route.get('/Product', 'ProductController.index')
+Route.get('purchaseOrderDetails', 'PurchaseOrderDetailController.index')
+Route.get('products', 'ProductController.index')
+Route.get('product/:id', 'ProductController.show')
+Route.get('suppliers', 'SupplierController.index')
 Route.get('purchaseOrders', 'PurchaseOrderController.index')
-
 Route.post('purchaseOrder', 'PurchaseOrderController.create')
-
 Route.patch('purchaseOrder/:id', 'PurchaseOrderController.update')
-
 Route.get('purchaseOrder/:id', 'PurchaseOrderController.show')
-
 Route.delete('purchaseOrderDetail/:id', 'PurchaseOrderDetailController.destroy')

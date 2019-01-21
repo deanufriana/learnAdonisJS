@@ -10,7 +10,7 @@ class PurchaseOrderSchema extends Schema {
       table.integer('supplier_id').notNull().unsigned().references('id').inTable('suppliers')
       table.timestamps('date')
       table.integer('total_item')
-      table.float('total')
+      table.float('totals')
     })
   }
 

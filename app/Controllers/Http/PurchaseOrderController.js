@@ -36,9 +36,23 @@ class PurchaseOrderController {
    * @param {View} ctx.view
    */
   async create({ request, response, view }) {
-    const dataPO = request.only(["supplier_id", "total", "total_item"]);
-    const data = await PO.create(dataPO);
-    response.json(data.id);
+
+    // Get Data For Purchase Order
+    const POdata = request.only(["supplier_id", "total_item", "totals"]);
+
+    //  Update Purchase Order Details
+    const PurchaseOrder = await PO.create(POdata);
+
+    // Get Data For Purchase Order Detail
+    let PODdata = request.collect(["total", "qty", "product_id"]);
+
+    PODdata.forEach(e => (e.purchase_order_id = PurchaseOrder.id));
+
+    // Input many data to purchase Order Details
+    await POD.query().insert(PODdata);
+
+    response.json({ message: "success", success: true });
+    
   }
 
   /**
@@ -61,9 +75,13 @@ class PurchaseOrderController {
    * @param {View} ctx.view
    */
   async show({ params, request, response, view }) {
-    const show = await PO.query().where('id', params.id).with('supplier').with('purchaseOrderDetails').fetch()
+    const show = await PO.query()
+      .where("id", params.id)
+      .with("supplier")
+      .with("purchaseOrderDetails")
+      .fetch();
 
-    response.json(show)
+    response.json(show);
   }
 
   /**
@@ -85,23 +103,7 @@ class PurchaseOrderController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
-    // Get Data For Purchase Order
-    const POdata = request.only(["total_item", "total"]);
-
-    // Get Data For Purchase Order Detail
-    const PODdata = request.only(["total", "qty", "product_id"]);
-
-    // Input many data to purchase Order Details
-    await POD.query().insert({ ...PODdata, purchase_order_id: params.id });
-
-    // Update Purchase Order Details
-    await PO.query()
-      .where("id", params.id)
-      .update(POdata);
-
-    response.json(POdata);
-  }
+  async update({ params, request, response }) {}
 
   /**
    * Delete a purchaseorder with id.
